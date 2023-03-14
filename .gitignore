@@ -1,4 +1,10 @@
+# virtualenv
 .venv
+
+# VSCode
 .vscode
 .DS Store
 .idea
+
+# python
+__pycache__

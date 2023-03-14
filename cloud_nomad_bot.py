@@ -1,3 +1,4 @@
+from ending import end_num
 import datetime
 import telebot
 import os
@@ -11,6 +12,7 @@ dayz = (PAYDAY-today).days
 
 @bot.message_handler(commands=["bonus"])
 def bonus(m, res=False):
-    bot.send_message(m.chat.id, "До премии осталось {} дней! НЕ ТЕРЯЙ ВРЕМЯ! ГОТОВЬСЯ!".format(dayz) )
+    bot.send_message(m.chat.id, end_num(dayz)) 
 
-bot.polling(none_stop=True, interval=0)
+if __name__ == "__main__":
+    bot.polling(none_stop=True, interval=0)
