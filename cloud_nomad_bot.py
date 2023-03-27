@@ -1,3 +1,4 @@
+from currency import stock_info
 from ending import end_num
 import datetime
 import telebot
@@ -39,6 +40,19 @@ def help_command(message):
 @bot.message_handler(commands=["bonus"])
 def bonus(m, res=False):
     bot.send_message(m.chat.id, end_num(dayz)) 
+
+@bot.message_handler(commands=["stocks"])
+def stocks_command(message):
+    bot.send_message(  
+        message.chat.id,
+        'Press "MSRT" button to get info about Microsoft stocks, \n' +
+        'Press "AAPL" button to get info about Apple stocks, \n' +
+        'Press "INTC" button to get info about Intel stocks, \n' + 
+        'Press "NVDA" button to get info about Nvidia stocks, \n' +   
+        'or just type a known NASDAQ symbol of a needed company.',  
+        reply_markup=keyboard  
+    )
+
 
 if __name__ == "__main__":
     bot.polling(none_stop=True, interval=0)
