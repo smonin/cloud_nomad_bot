@@ -62,8 +62,8 @@ def stocks_command(message):
         'Press "MSFT" button to get info about Microsoft stocks, \n' +
         'Press "AAPL" button to get info about Apple stocks, \n' +
         'Press "INTC" button to get info about Intel stocks, \n' + 
-        'Press "NVDA" button to get info about Nvidia stocks, \n' +   
-        'or just type a known NASDAQ symbol of a needed company.',  
+        'Press "NVDA" button to get info about Nvidia stocks.', #\n' +   
+        #'or just type a known NASDAQ symbol of a needed company.',  
         reply_markup=markup
     )
 
@@ -79,6 +79,10 @@ def handle_text(message):
         reply = stock_info("NVDA")
 
     bot.send_message(message.chat.id, reply)
+    #elif message.text.strip() == message.text:
+    #    reply = stock_info(message.text)
+
+    
 
 if __name__ == "__main__":
     bot.polling(none_stop=True, interval=0)
