@@ -1,4 +1,5 @@
-from currency import stock_info
+from cryptocurrencies import my_btc_converter
+from stocks import stock_info
 from ending import end_num
 import datetime
 import telebot
@@ -17,9 +18,10 @@ def start_command(message):
     bot.send_message(  
         message.chat.id,  
         'Greetings!\n' +  
-        'To get the bonus information press /bonus\n' + 
-        'To get stocks information press /stocks\n' +  
-        'To get help press /help.'  
+        'Bonus information - press /bonus\n' + 
+        'Stocks information - press /stocks\n' +  
+        'Bitcoin price information - press /crypto\n' +
+        'Help page - press /help.'  
     )
 
 @bot.message_handler(commands=['help'])     
@@ -34,15 +36,36 @@ def help_command(message):
         message.chat.id,
         'The Cloud nomad bot development is in progress, \n' +
         'but you can try some commands... \n' +
-        '1) To receive the bonus information press /bonus\n' +
-        '2) To receive stocks information press /stocks\n' +   
+        'Bonus information - press /bonus\n' +
+        'Stocks information - press /stocks\n' + 
+        'Bitcoin price information - press /crypto\n' +  
         'Stay tuned and new features will appear soon!',  
         reply_markup=keyboard  
     )
 
 @bot.message_handler(commands=["bonus"])
 def bonus(m, res=False):
-    bot.send_message(m.chat.id, end_num(dayz)) 
+    bot.send_message(m.chat.id, 'Дождались! Твой проект тю-тю, ищи работу!')
+
+
+@bot.message_handler(commands=["crypto"])
+def crypto_command(message):
+    markup=types.ReplyKeyboardMarkup(resize_keyboard=True)
+    but1 = types.KeyboardButton("USD")
+    but2 = types.KeyboardButton("EUR")
+    but3 = types.KeyboardButton("GBP")
+    markup.add(but1)
+    markup.add(but2)
+    markup.add(but3)
+
+    bot.send_message(  
+        message.chat.id,
+        'Press "USD" button to get Bitcoin price in $ \n' +
+        'Press "EUR" button to get Bitcoin price in € \n' +
+        'Press "GBP" button to get Bitcoin price in £ \n',
+         
+        reply_markup=markup
+    )
 
 @bot.message_handler(commands=["stocks"])
 def stocks_command(message):
@@ -68,7 +91,7 @@ def stocks_command(message):
     )
 
 @bot.message_handler(content_types=["text"])
-def handle_text(message):
+def handle_text_1(message):
     if message.text.strip() == "MSFT":
         reply = stock_info("MSFT")
     elif message.text.strip() == "AAPL":
@@ -77,10 +100,18 @@ def handle_text(message):
         reply = stock_info("INTC")
     elif message.text.strip() == "NVDA":
         reply = stock_info("NVDA")
-
-    bot.send_message(message.chat.id, reply)
+    elif message.text.strip() == "USD":
+        reply = my_btc_converter("USD")
+    elif message.text.strip() == "EUR":
+        reply = my_btc_converter("EUR")
+    elif message.text.strip() == "GBP":
+        reply = my_btc_converter("GBP")
     #elif message.text.strip() == message.text:
     #    reply = stock_info(message.text)
+    
+
+    bot.send_message(message.chat.id, reply)
+        
 
     
 
